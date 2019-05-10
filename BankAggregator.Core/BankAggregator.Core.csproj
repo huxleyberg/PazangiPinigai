@@ -9,6 +9,7 @@
     <Folder Include="Services\SEB\" />
     <Folder Include="Services\MedBank\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Services\Banks\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Class1.cs" />
