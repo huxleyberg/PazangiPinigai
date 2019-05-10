@@ -15,4 +15,7 @@
     <ProjectReference Include="..\BankAggregator.Core\BankAggregator.Core.csproj" />
     <ProjectReference Include="..\BankAggregator.Domain\BankAggregator.Domain.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\BankServices\" />
+  </ItemGroup>
 </Project>

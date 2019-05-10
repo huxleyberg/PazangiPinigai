@@ -22,7 +22,9 @@ namespace BankAggregator.Web.Controllers
 
 
 
-            return Redirect(response.ResponseUri.AbsoluteUri);
+            //return Redirect(response.ResponseUri.AbsoluteUri);
+
+            return View();
         }
 
         public IActionResult About()
@@ -48,6 +50,21 @@ namespace BankAggregator.Web.Controllers
 
             Dictionary<string, string> tokenInfo = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content);
             string token = tokenInfo["access_token"];
+            string refresh_token = tokenInfo["refresh_token"];
+
+            ViewData["token"] = token;
+            ViewData["refresh_token"] = refresh_token;
+
+            string requestId = Guid.NewGuid().ToString();
+
+            var client1 = new RestClient("https://api-sandbox.sebgroup.com/ais/v4/identified2/accounts?withBalance=false");
+            var request1 = new RestRequest(Method.GET);
+            request1.AddHeader("Accept", "application/json");
+            //request1.AddHeader("psu-http-method", "GET");
+            //request1.AddHeader("psu-corporate-id", "40073144970009");
+            request1.AddHeader("authorization", $"Bearer {token}");
+            request1.AddHeader("x-request-id", requestId);
+            IRestResponse response1 = client1.Execute(request1);
 
             return View();
         }
@@ -55,6 +72,17 @@ namespace BankAggregator.Web.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
+
+            string requestId = Guid.NewGuid().ToString();
+
+            var client = new RestClient("https://api-sandbox.sebgroup.com/ais/v4/identified2/accounts?withBalance=true");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Accept", "application/json");
+            //request.AddHeader("psu-http-method", "GET");
+            //request.AddHeader("psu-corporate-id", "40073144970009");
+            request.AddHeader("authorization", "bearer 4CEWSXXvSRY1b1irTVWY");
+            request.AddHeader("x-request-id", requestId);
+            IRestResponse response = client.Execute(request);
 
             return View();
         }
