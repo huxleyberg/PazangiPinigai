@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using BankAggregator.Web.Models;
 using RestSharp;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankAggregator.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
