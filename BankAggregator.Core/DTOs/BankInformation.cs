@@ -7,5 +7,6 @@ namespace BankAggregator.Core.DTOs
         public string AccountName { get; set; }
         public string Currency { get; set; }
         public decimal AccountBalance { get; set; }
+        public string AccountType { get; set; }
     }
 }

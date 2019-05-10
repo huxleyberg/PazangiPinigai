@@ -97,10 +97,13 @@ namespace BankAggregator.Core.Services.MedBank
             MedBankAccountInfoResponse result = JsonConvert.DeserializeObject<MedBankAccountInfoResponse>(content);
 
             BankInformation info = new BankInformation();
-            info.AccountBalance = Convert.ToDecimal(result.balances[0].balanceAmount);
+            info.AccountBalance = Convert.ToDecimal(result.balances[0].balanceAmount.amount);
             info.AccountName = result.name;
             info.AccountNumber = accountId;
             info.Currency = result.currency;
+            info.AccountType = "Privatkonto";
+
+
 
             return info;
         }

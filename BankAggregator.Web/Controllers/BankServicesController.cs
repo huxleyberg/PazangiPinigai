@@ -22,7 +22,8 @@ namespace BankAggregator.Web.Controllers
         {
             //var consent = _medBankServices.GetConsent();
 
-            var bankInfo = _medBankServices.GetAccountInfoById("ACC_ID_123456789");
+            var bankInfo = _medBankServices.GetAccountInfoById("ACC_ID_123456789").Result;
+
             return View();
         }
     }
