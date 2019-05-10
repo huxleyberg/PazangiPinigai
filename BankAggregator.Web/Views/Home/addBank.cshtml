@@ -1,0 +1,36 @@
+﻿@model BankAggregator.Web.ViewModels.accountViewModel
+@{
+    ViewData["Title"] = "addBank";
+}
+
+<h2>addBank</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form asp-action="addBank">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="bankName">Bank Name</label>
+                    <input asp-for="bankName" class="form-control" />
+                    <span asp-validation-for="bankName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="acctNumber">Account Number</label>
+                    <input asp-for="acctNumber" class="form-control" />
+                    <span asp-validation-for="acctNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="transactionLimit">Account Number</label>
+                    <input asp-for="transactionLimit" class="form-control" />
+                    <span asp-validation-for="transactionLimit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>

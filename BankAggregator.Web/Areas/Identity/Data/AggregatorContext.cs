@@ -16,9 +16,10 @@ namespace BankAggregator.Web.Models
         {
             
         }
-
+        
         public virtual DbSet<appUser> appUsers { get; set; }
         public virtual DbSet<accountModel> AccountModels { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

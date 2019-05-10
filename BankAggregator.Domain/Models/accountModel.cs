@@ -7,10 +7,11 @@ namespace BankAggregator.Domain.Models
     public class accountModel
     {
         public int Id { get; set; }
-        public string UserID { get; set; }
+        public string appUserId { get; set; }
         public string BankName { get; set; }
         public string BankAccountNumber { get; set; }
         public decimal? Balance { get; set; }
+        public string Currency { get; set; }
         public DateTime? CreatedAt { get; set; }
         public appUser User { get; set; }
 

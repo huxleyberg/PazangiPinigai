@@ -8,12 +8,23 @@ using BankAggregator.Web.Models;
 using RestSharp;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Authorization;
+using BankAggregator.Domain.Models;
+using BankAggregator.Web.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace BankAggregator.Web.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
+        private AggregatorContext _context;
+        private UserManager<appUser> _userManager;
+
+        public HomeController(AggregatorContext context, UserManager<appUser> userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
         public IActionResult Index()
         {
             //var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
@@ -29,6 +40,11 @@ namespace BankAggregator.Web.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
+            return View();
+        }
+
+        public IActionResult Dashboard()
+        {
             return View();
         }
 
@@ -61,6 +77,27 @@ namespace BankAggregator.Web.Controllers
             IRestResponse response1 = client1.Execute(request1);
 
             return View();
+        }
+
+        public IActionResult addBank()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> addBank(accountViewModel model)
+        {
+            var acctModel = new accountModel();
+            acctModel.BankName = model.bankName;
+            acctModel.BankAccountNumber = model.acctNumber;
+            acctModel.CreatedAt = DateTime.Now;
+            acctModel.User = await _userManager.GetUserAsync(HttpContext.User);
+            acctModel.TransactionLimit = model.transactionLimit;
+            acctModel.Currency = "EUR";
+
+            _context.AccountModels.Add(acctModel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Dashboard));
         }
 
         public IActionResult Contact()
