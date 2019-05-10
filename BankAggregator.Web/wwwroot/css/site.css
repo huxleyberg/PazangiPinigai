@@ -35,3 +35,304 @@ body {
         display: none;
     }
 }
+
+
+/* Custom CSS*/
+body {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --web-view-ids: Pazangi_Pinigai_Landing;
+}
+
+#Pazangi_Pinigai_Landing * {
+    margin: 0;
+    padding: 0;
+}
+
+#Pazangi_Pinigai_Landing {
+    position: absolute;
+    box-sizing: border-box;
+    background: #E5E5E5;
+    width: 1440px;
+    height: 900px;
+    background-color: rgba(255,255,255,1);
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    opacity: 1;
+    --web-view-name: Pazangi Pinigai Landing;
+    --web-view-id: Pazangi_Pinigai_Landing;
+    --web-enable-deep-linking: true;
+}
+
+#Rectangle_1 {
+    opacity: 1;
+    fill: url(#LinearGradientFill1);
+}
+
+.Rectangle_1 {
+    position: absolute;
+    overflow: visible;
+    width: 1440px;
+    height: 900px;
+    left: 0px;
+    top: 0px;
+}
+
+#Path_9 {
+    opacity: 1;
+    fill: url(#LinearGradientFill2);
+}
+
+.Path_9 {
+    transform: matrix(1,0,0,1,0,0);
+    overflow: visible;
+    position: absolute;
+    top: 304.416px;
+    left: -440.789px;
+    width: 2493.414px;
+    height: 335.584px;
+}
+
+#Group_1 {
+    opacity: 1;
+    position: absolute;
+    width: 216.84px;
+    height: 36px;
+    left: 38px;
+    top: 28.928px;
+    overflow: visible;
+}
+
+#Path_8 {
+    opacity: 1;
+    fill: rgba(255,255,255,1);
+}
+
+.Path_8 {
+    transform: matrix(1,0,0,1,0,0);
+    overflow: visible;
+    position: absolute;
+    top: 15.763px;
+    left: 66.469px;
+    width: 150.371px;
+    height: 20.237px;
+}
+
+#Subtraction_2 {
+    opacity: 1;
+    fill: rgba(255,255,255,1);
+    stroke: rgba(0, 0, 0, 0);
+    stroke-width: 1px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+.Subtraction_2 {
+    transform: matrix(1,0,0,1,0,0);
+    overflow: visible;
+    position: absolute;
+    top: 0px;
+    left: 23.479px;
+    width: 44.217px;
+    height: 32.452px;
+}
+
+#Path_7 {
+    opacity: 1;
+    fill: rgba(255,255,255,1);
+}
+
+.Path_7 {
+    transform: matrix(1,0,0,1,0,0);
+    overflow: visible;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 42.227px;
+    height: 31.452px;
+}
+
+#we_track_it_ {
+    opacity: 1;
+    position: absolute;
+    left: 78px;
+    top: 342px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    width: 322px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Circular Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+    color: rgba(255,255,255,1);
+}
+
+#Earn_it__spend_it_ {
+    opacity: 1;
+    position: absolute;
+    left: 78px;
+    top: 251px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    width: 440px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Circular Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 60px;
+    color: rgba(255,255,255,1);
+}
+
+#Mac_air {
+    opacity: 1;
+    fill: url(#Mac_air_A0_Rectangle_3_pattern);
+}
+
+.Mac_air {
+    position: absolute;
+    overflow: visible;
+    width: 926px;
+    height: 529px;
+    left: 736px;
+    top: 178px;
+}
+
+#Because_we_understand_how_stre {
+    opacity: 1;
+    position: absolute;
+    left: 78px;
+    top: 457px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 521px;
+    height: 107px;
+    text-align: left;
+    font-family: Circular Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    color: rgba(255,255,255,1);
+}
+
+#Sign_up_button {
+    opacity: 1;
+    position: absolute;
+    width: 180px;
+    height: 60px;
+    left: 78px;
+    top: 600px;
+    overflow: visible;
+}
+
+#Rectangle_2 {
+    opacity: 1;
+    fill: rgba(255,255,255,1);
+    stroke: rgb(255, 255, 255);
+    stroke-width: 1px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+.Rectangle_2 {
+    position: absolute;
+    overflow: visible;
+    width: 180px;
+    height: 60px;
+    left: 0px;
+    top: 0px;
+}
+
+#Sign_up {
+    opacity: 1;
+    position: absolute;
+    left: 62.842px;
+    top: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    width: 56px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Circular Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgba(0,0,0,1);
+}
+
+#Sign_up_button_A0_Group_3 {
+    opacity: 1;
+    position: absolute;
+    width: 180px;
+    height: 60px;
+    left: 283px;
+    top: 600px;
+    overflow: visible;
+}
+
+#Rectangle_2_A0_Rectangle_5 {
+    opacity: 1;
+    fill: transparent;
+    stroke: rgb(255, 255, 255);
+    stroke-width: 2px;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    stroke-miterlimit: 4;
+    shape-rendering: auto;
+}
+
+.Rectangle_2_A0_Rectangle_5 {
+    position: absolute;
+    overflow: visible;
+    width: 180px;
+    height: 60px;
+    left: 0px;
+    top: 0px;
+}
+
+#Sign_in {
+    opacity: 1;
+    position: absolute;
+    left: 64.842px;
+    top: 20px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    width: 51px;
+    white-space: nowrap;
+    text-align: left;
+    font-family: Circular Std;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    color: rgba(255,255,255,1);
+}
+
+#Mask_Group_2 {
+    opacity: 1;
+    position: absolute;
+    width: 724px;
+    height: 455px;
+    left: 840px;
+    top: 205px;
+    overflow: visible;
+}

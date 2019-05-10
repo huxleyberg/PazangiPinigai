@@ -7,21 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using BankAggregator.Web.Models;
 using RestSharp;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BankAggregator.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         public IActionResult Index()
         {
-            var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("Accept", "text/html");
-            IRestResponse response = client.Execute(request);
-
-
-
-
+            //var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
+            //var request = new RestRequest(Method.GET);
+            //request.AddHeader("Accept", "text/html");
+            //IRestResponse response = client.Execute(request);
             //return Redirect(response.ResponseUri.AbsoluteUri);
 
             return View();
@@ -31,16 +29,12 @@ namespace BankAggregator.Web.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-
-
-
             return View();
         }
 
         public IActionResult oauth(string code)
         {
             ViewData["Message"] = $"{code}";
-
             var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/token");
             var request = new RestRequest(Method.POST);
             request.AddHeader("Accept", "application/json");
