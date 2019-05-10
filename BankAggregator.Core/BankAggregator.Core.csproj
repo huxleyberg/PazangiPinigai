@@ -6,6 +6,9 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="Services\SEB\" />
+    <Folder Include="Services\MedBank\" />
+    <Folder Include="DTOs\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Class1.cs" />
