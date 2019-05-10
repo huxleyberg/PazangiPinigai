@@ -1,4 +1,5 @@
-﻿@inject SignInManager<appUser> SignInManager
+﻿@using BankAggregator.Domain.Models;
+@inject SignInManager<appUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
