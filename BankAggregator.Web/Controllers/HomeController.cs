@@ -78,35 +78,29 @@ namespace BankAggregator.Web.Controllers
 
 
 
-        public IActionResult oauth(string code)
+        public async Task<IActionResult> oauth(string code)
         {
-            ViewData["Message"] = $"{code}";
-            var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/token");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Accept", "application/json");
-            request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddParameter("application/x-www-form-urlencoded", $"client_id=vexruMdCnIFFWu63X64R&client_secret=K3QfdE2nlCAKsGFtUo3Y&code={code}&redirect_uri=https://localhost:5001/home/oauth&grant_type=authorization_code&scope=fiokjub", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
+            var acctModel = new accountModel();
 
-            Dictionary<string, string> tokenInfo = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content);
-            string token = tokenInfo["access_token"];
-            string refresh_token = tokenInfo["refresh_token"];
+            var bankInfo = _sEBAccountAuthService.GetBankBysandBoxID("9311219639");
 
-            ViewData["token"] = token;
-            ViewData["refresh_token"] = refresh_token;
+            acctModel.BankName = "SEB";
+            acctModel.BankAccountNumber = bankInfo.AccountNumber;
+            acctModel.BankAccountName = bankInfo.AccountName;
+            acctModel.Currency = bankInfo.Currency;
+            acctModel.AccountType = bankInfo.AccountType;
+            acctModel.Balance = bankInfo.AccountBalance;
+            acctModel.TotalExpense = bankInfo.TotalExpenses;
+            acctModel.TotalIncome = bankInfo.TotalIncome;
+            acctModel.SandboxIdentification = bankInfo.SandboxIdentification;
+            acctModel.CreatedAt = DateTime.Now;
+            acctModel.User = await _userManager.GetUserAsync(HttpContext.User);
+            acctModel.TransactionLimit = 15.0M;
 
-            string requestId = Guid.NewGuid().ToString();
+            _context.AccountModels.Add(acctModel);
+            await _context.SaveChangesAsync();
 
-            var client1 = new RestClient("https://api-sandbox.sebgroup.com/ais/v4/identified2/accounts?withBalance=false");
-            var request1 = new RestRequest(Method.GET);
-            request1.AddHeader("Accept", "application/json");
-            //request1.AddHeader("psu-http-method", "GET");
-            //request1.AddHeader("psu-corporate-id", "40073144970009");
-            request1.AddHeader("authorization", $"Bearer {token}");
-            request1.AddHeader("x-request-id", requestId);
-            IRestResponse response1 = client1.Execute(request1);
-
-            return View();
+            return RedirectToAction(nameof(Dashboard));
         }
 
         public IActionResult addBank()
@@ -124,6 +118,7 @@ namespace BankAggregator.Web.Controllers
 
             if (model.bankName.ToLower() == "seb")
             {
+                TempData["accountnumber"] = model.acctNumber;
                 var redirecturl = _sEBAccountAuthService.AuthRedirectUrl();
                 return Redirect(redirecturl);
             }
