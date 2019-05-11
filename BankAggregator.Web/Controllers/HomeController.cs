@@ -73,7 +73,16 @@ namespace BankAggregator.Web.Controllers
         public async Task<IActionResult> Dashboard()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            string userId = user.Id;
+            string userId = "";
+            if (user == null)
+            {
+                userId = "1";
+            }
+            else
+            {
+                userId = user.Id;
+            }
+
 
             DashboardVM model = new DashboardVM();
             model.CustomerAccounts = _accountSummaryService.GetAllCustomerAccounts(userId);

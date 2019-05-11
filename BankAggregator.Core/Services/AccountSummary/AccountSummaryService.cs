@@ -28,11 +28,19 @@ namespace BankAggregator.Core.Services.AccountSummary
         public decimal GetTotalAccountSum(string userId)
         {
             decimal total = 0M;
-            var accts = GetAllCustomerAccounts(userId);
-            if (accts != null && accts.Count != 0)
+            try
             {
-                total = accts.Sum(x => (decimal)x.Balance);
+                var accts = GetAllCustomerAccounts(userId);
+                if (accts != null && accts.Count != 0)
+                {
+                    total = accts.Sum(x => (decimal)x.Balance);
+                }
             }
+            catch (Exception ex)
+            {
+
+            }
+
 
             return total;
         }
@@ -138,33 +146,48 @@ namespace BankAggregator.Core.Services.AccountSummary
         public int TotalIncomeTransCount(string userId)
         {
             //get the accounts belonging to the user.
-            var accts = GetAllCustomerAccounts(userId);
 
             var incomeTotal = 0;
-
-            foreach (var acct in accts)
+            try
             {
-                var trans = _transactionService.GetAccountTransactions(acct.BankAccountNumber);
-                var total = 0;
-                if (trans != null && trans.Count != 0)
+                var accts = GetAllCustomerAccounts(userId);
+                foreach (var acct in accts)
                 {
-                    trans = trans.Where(x => x.TransactionType.ToLower() == "c").ToList();
-                    total = trans.Count;
+                    var trans = _transactionService.GetAccountTransactions(acct.BankAccountNumber);
+                    var total = 0;
+                    if (trans != null && trans.Count != 0)
+                    {
+                        trans = trans.Where(x => x.TransactionType.ToLower() == "c").ToList();
+                        total = trans.Count;
 
-                    incomeTotal = incomeTotal + total;
+                        incomeTotal = incomeTotal + total;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+            }
+
             return incomeTotal;
         }
 
         public decimal TransLimit(string userId)
         {
             decimal total = 0M;
-            var accts = GetAllCustomerAccounts(userId);
-            if (accts != null && accts.Count != 0)
+            try
             {
-                total = accts.Sum(x => (decimal)x.TransactionLimit);
+                var accts = GetAllCustomerAccounts(userId);
+                if (accts != null && accts.Count != 0)
+                {
+                    total = accts.Sum(x => (decimal)x.TransactionLimit);
+                }
             }
+            catch (Exception ex)
+            {
+
+            }
+
 
             return total;
         }
