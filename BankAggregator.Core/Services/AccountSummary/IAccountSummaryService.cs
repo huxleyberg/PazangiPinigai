@@ -6,14 +6,19 @@ namespace BankAggregator.Core.Services.AccountSummary
 {
     public interface IAccountSummaryService
     {
-        decimal GetTotalAccountSum(int userId);
+        decimal GetTotalAccountSum(string userId);
 
-        decimal GetTotalIncomeSumForCustomerFrmTrans(int userId);
+        int TotalAccountCount(string userId);
+        decimal TransLimit(string userId);
+        int TotalIncomeTransCount(string userId);
+        int TotalExpenseTransCount(string userId);
+
+        decimal GetTotalIncomeSumForCustomerFrmTrans(string userId);
         decimal GetTotalIncomeSumForAccountFrmTrans(string accountNumber);
 
-        decimal GetTotalExpenseSumForCustomerFrmTrans(int userId);
+        decimal GetTotalExpenseSumForCustomerFrmTrans(string userId);
         decimal GetTotalExpenseSumForAccountFrmTrans(string accountNumber);
 
-        List<accountModel> GetAllCustomerAccounts(int userId);
+        List<accountModel> GetAllCustomerAccounts(string userId);
     }
 }
