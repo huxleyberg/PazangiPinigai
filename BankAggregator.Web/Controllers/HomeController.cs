@@ -73,7 +73,29 @@ namespace BankAggregator.Web.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             string userId = user.Id;
-            return View();
+
+            DashboardVM model = new DashboardVM();
+            model.CustomerAccounts = _accountSummaryService.GetAllCustomerAccounts(userId);
+            model.CustomerTransactions = new List<Core.DTOs.Transaction>();
+
+            foreach (var item in model.CustomerAccounts)
+            {
+                var trans = _transactionService.GetAccountTransactions(item.BankAccountNumber);
+                foreach (var tran in trans)
+                {
+                    model.CustomerTransactions.Add(tran);
+                }
+            }
+
+            model.TotalAccountCount = _accountSummaryService.TotalAccountCount(userId);
+            model.TotalAccountSum = _accountSummaryService.GetTotalAccountSum(userId);
+            model.TotalExpenses = _accountSummaryService.GetTotalExpenseSumForCustomerFrmTrans(userId);
+            model.TotalExpenseTransactionsCount = _accountSummaryService.TotalExpenseTransCount(userId);
+            model.TotalIncomeSum = _accountSummaryService.GetTotalIncomeSumForCustomerFrmTrans(userId);
+            model.TotalIncomeTransactionsCount = _accountSummaryService.TotalIncomeTransCount(userId);
+
+
+            return View(model);
         }
 
 
