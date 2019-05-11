@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Identity;
 using BankAggregator.Core.Services.Transactions;
 using BankAggregator.Core.Services.AccountSummary;
 using BankAggregator.Core.Services.Banks;
+using BankAggregator.Core.Services.MedBank;
+using BankAggregator.Core.Services.Banks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankAggregator.Web.Controllers
 {
@@ -25,7 +28,7 @@ namespace BankAggregator.Web.Controllers
         private readonly ITransactionService _transactionService;
         private readonly IAccountSummaryService _accountSummaryService;
         private readonly IBankService _bankService;
-
+        private IMedBankServices _medBankServices;
 
 
         public HomeController(AggregatorContext context, UserManager<appUser> userManager, ITransactionService transactionService,
@@ -36,13 +39,24 @@ namespace BankAggregator.Web.Controllers
             _transactionService = transactionService;
             _accountSummaryService = accountSummaryService;
             _bankService = bankService;
+
+        }
+        public HomeController(AggregatorContext context, UserManager<appUser> userManager, IMedBankServices medBankServices)
+        {
+            _context = context;
+            _userManager = userManager;
+            _medBankServices = medBankServices;
         }
         public IActionResult Index()
         {
-            //var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
-            //var request = new RestRequest(Method.GET);
-            //request.AddHeader("Accept", "text/html");
-            //IRestResponse response = client.Execute(request);
+            var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Accept", "text/html");
+            IRestResponse response = client.Execute(request);
+
+
+
+
             //return Redirect(response.ResponseUri.AbsoluteUri);
 
             return View();
@@ -97,6 +111,8 @@ namespace BankAggregator.Web.Controllers
 
         public IActionResult addBank()
         {
+            var Banks = new BankService();
+            ViewData["BankList"] = new SelectList(Banks.GetBanks(), "Id", "Name");
             return View();
         }
 
@@ -104,12 +120,22 @@ namespace BankAggregator.Web.Controllers
         public async Task<IActionResult> addBank(accountViewModel model)
         {
             var acctModel = new accountModel();
+            //string accountId = "ACC _ID_" + model.acctNumber; 
+            var bankInfo = _medBankServices.GetAccountInfoById(model.acctNumber).Result;
+
             acctModel.BankName = model.bankName;
-            acctModel.BankAccountNumber = model.acctNumber;
+            acctModel.BankAccountNumber = bankInfo.AccountNumber;
+            acctModel.BankAccountName = bankInfo.AccountName;
+            acctModel.Currency = bankInfo.Currency;
+            acctModel.AccountType = bankInfo.AccountType;
+            acctModel.Balance = bankInfo.AccountBalance;
+            acctModel.TotalExpense = bankInfo.TotalExpenses;
+            acctModel.TotalIncome = bankInfo.TotalIncome;
+            acctModel.SandboxIdentification = bankInfo.SandboxIdentification;
             acctModel.CreatedAt = DateTime.Now;
             acctModel.User = await _userManager.GetUserAsync(HttpContext.User);
             acctModel.TransactionLimit = model.transactionLimit;
-            acctModel.Currency = "EUR";
+
 
             _context.AccountModels.Add(acctModel);
             await _context.SaveChangesAsync();
