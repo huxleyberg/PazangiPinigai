@@ -15,6 +15,9 @@ namespace BankAggregator.Domain.Models
         public DateTime? CreatedAt { get; set; }
         public appUser User { get; set; }
 
+        public decimal TotalExpense { get; set; }
+        public decimal TotalIncome { get; set; }
+
         public decimal? TransactionLimit { get; set; }
     }
 }

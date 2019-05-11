@@ -8,5 +8,8 @@ namespace BankAggregator.Core.DTOs
         public string Currency { get; set; }
         public decimal AccountBalance { get; set; }
         public string AccountType { get; set; }
+        public string SandboxIdentification { get; set; }
+        public decimal TotalIncome { get; set; }
+        public decimal TotalExpenses { get; set; }
     }
 }

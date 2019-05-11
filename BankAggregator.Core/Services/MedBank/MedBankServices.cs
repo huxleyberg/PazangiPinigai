@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using BankAggregator.Core.DTOs.AccountInfo;
+using System.IO.IsolatedStorage;
 
 namespace BankAggregator.Core.Services.MedBank
 {
@@ -102,6 +103,8 @@ namespace BankAggregator.Core.Services.MedBank
             info.AccountNumber = accountId;
             info.Currency = result.currency;
             info.AccountType = "Privatkonto";
+            info.TotalIncome = info.AccountBalance - 1;
+            info.TotalExpenses = 1M;
 
 
 

@@ -13,6 +13,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BankAggregator.Core.Services.MedBank;
+using BankAggregator.Core.Services.Banks;
+using BankAggregator.Core.Services.Transactions;
+using BankAggregator.Core.Services.AccountSummary;
+using BankAggregator.Core.Services.SEB;
+using BankAggregator.Domain.EF;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankAggregator.Web
 {
@@ -34,10 +40,19 @@ namespace BankAggregator.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddScoped<IMedBankServices, MedBankServices>();
+            services.AddScoped<IBankService, BankService>();
+
+            services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IAccountSummaryService, AccountSummaryService>();
+            services.AddScoped<ISEBAccountAuthService, SEBAccountAuthService>();
+
+            services.AddDbContext<FinAggregatorDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AggregatorContextConnection")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
