@@ -14,5 +14,6 @@ namespace BankAggregator.Web.ViewModels
         public int TotalAccountCount { get; set; }
         public int TotalIncomeTransactionsCount { get; set; }
         public int TotalExpenseTransactionsCount { get; set; }
+        public decimal TransLimit { get; set; }
     }
 }
