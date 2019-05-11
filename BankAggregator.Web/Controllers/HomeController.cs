@@ -18,9 +18,14 @@ using BankAggregator.Core.Services.MedBank;
 using BankAggregator.Core.Services.Banks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BankAggregator.Core.Services.SEB;
+using Microsoft.Extensions.Logging;
+using BankAggregator.Web.Areas.Identity.Pages.Account;
+using System.ComponentModel.DataAnnotations;
+using LoginModel = BankAggregator.Web.ViewModels.LoginModel;
+using System.Text.Encodings.Web;
 
 namespace BankAggregator.Web.Controllers
-{
+{   
     [Authorize]
     public class HomeController : Controller
     {
@@ -31,10 +36,12 @@ namespace BankAggregator.Web.Controllers
         private readonly IBankService _bankService;
         private IMedBankServices _medBankServices;
         private readonly ISEBAccountAuthService _sEBAccountAuthService;
+        private readonly SignInManager<appUser> _signInManager;
+        private readonly ILogger<LoginModel> _logger;
 
 
         public HomeController(AggregatorContext context, UserManager<appUser> userManager, ITransactionService transactionService,
-            IAccountSummaryService accountSummaryService, IBankService bankService, ISEBAccountAuthService sEBAccountAuthService, IMedBankServices medBankServices)
+            IAccountSummaryService accountSummaryService, IBankService bankService, SignInManager<appUser> signInManager, ILogger<LoginModel> logger, ISEBAccountAuthService sEBAccountAuthService, IMedBankServices medBankServices)
         {
             _context = context;
             _userManager = userManager;
@@ -43,6 +50,8 @@ namespace BankAggregator.Web.Controllers
             _bankService = bankService;
             _sEBAccountAuthService = sEBAccountAuthService;
             _medBankServices = medBankServices;
+            _signInManager = signInManager;
+            _logger = logger;
 
         }
         //public HomeController(AggregatorContext context, UserManager<appUser> userManager, IMedBankServices medBankServices)
@@ -61,6 +70,75 @@ namespace BankAggregator.Web.Controllers
             //return Redirect(response.ResponseUri.AbsoluteUri);
 
             return View();
+        }
+
+        public async Task<IActionResult> login(LoginModel Input, string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            if (ModelState.IsValid)
+            {
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
+                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User logged in.");
+                    //get the object via the email
+                    return RedirectToAction(nameof(Dashboard));
+                }
+                if (result.RequiresTwoFactor)
+                {
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                }
+                if (result.IsLockedOut)
+                {
+                    _logger.LogWarning("User account locked out.");
+                    return RedirectToPage("./Lockout");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> register(ViewModels.RegisterModel Input, string returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            if (ModelState.IsValid)
+            {
+                var user = new appUser { UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber, FullName = Input.FullName, CreatedAt = DateTime.Now };
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                if (result.Succeeded)
+                {
+                    _logger.LogInformation("User created a new account with password.");
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { userId = user.Id, code = code },
+                        protocol: Request.Scheme);
+
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                        //$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    return LocalRedirect(returnUrl);
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return RedirectToAction(nameof(Dashboard));
         }
 
         public IActionResult About()
