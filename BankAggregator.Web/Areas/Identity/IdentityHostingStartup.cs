@@ -15,14 +15,14 @@ namespace BankAggregator.Web.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
-                services.AddDbContext<AggregatorContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("AggregatorContextConnection")));
+           // builder.ConfigureServices((context, services) => {
+                //services.AddDbContext<AggregatorContext>(options =>
+                //    options.UseSqlServer(
+                //        context.Configuration.GetConnectionString("AggregatorContextConnection")));
 
-                services.AddDefaultIdentity<appUser>()
-                    .AddEntityFrameworkStores<AggregatorContext>();
-            });
+                //services.AddDefaultIdentity<appUser>()
+                //    .AddEntityFrameworkStores<AggregatorContext>();
+           // });
         }
     }
 }

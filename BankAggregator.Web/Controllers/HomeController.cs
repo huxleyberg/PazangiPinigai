@@ -32,10 +32,14 @@ namespace BankAggregator.Web.Controllers
         }
         public IActionResult Index()
         {
-            //var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
-            //var request = new RestRequest(Method.GET);
-            //request.AddHeader("Accept", "text/html");
-            //IRestResponse response = client.Execute(request);
+            var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Accept", "text/html");
+            IRestResponse response = client.Execute(request);
+
+
+
+
             //return Redirect(response.ResponseUri.AbsoluteUri);
 
             return View();
