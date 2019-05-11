@@ -34,7 +34,7 @@ namespace BankAggregator.Web.Controllers
 
 
         public HomeController(AggregatorContext context, UserManager<appUser> userManager, ITransactionService transactionService,
-            IAccountSummaryService accountSummaryService, IBankService bankService, ISEBAccountAuthService sEBAccountAuthService)
+            IAccountSummaryService accountSummaryService, IBankService bankService, ISEBAccountAuthService sEBAccountAuthService, IMedBankServices medBankServices)
         {
             _context = context;
             _userManager = userManager;
@@ -42,14 +42,15 @@ namespace BankAggregator.Web.Controllers
             _accountSummaryService = accountSummaryService;
             _bankService = bankService;
             _sEBAccountAuthService = sEBAccountAuthService;
+            _medBankServices = medBankServices;
 
         }
-        public HomeController(AggregatorContext context, UserManager<appUser> userManager, IMedBankServices medBankServices)
-        {
-            _context = context;
-            _userManager = userManager;
-            _medBankServices = medBankServices;
-        }
+        //public HomeController(AggregatorContext context, UserManager<appUser> userManager, IMedBankServices medBankServices)
+        //{
+        //    _context = context;
+        //    _userManager = userManager;
+        //    _medBankServices = medBankServices;
+        //}
         public IActionResult Index()
         {
             var client = new RestClient("https://api-sandbox.sebgroup.com/mga/sps/oauth/oauth20/authorize?client_id=vexruMdCnIFFWu63X64R&scope=accounts&redirect_uri=https://localhost:5001/home/oauth&response_type=code");
