@@ -152,20 +152,34 @@
                             </div>
                         </div>
 
-                       @foreach (var item in Model.CustomerAccounts)
+                        @foreach (var item in Model.CustomerAccounts)
                        {
                         <div class="col-lg-4 col-12">
                             <div class="box pull-up">
                                 <div class="box-body py-40">
+                                    <div classs="row">
+                                        <div class="col-md-6 " pull-right">@DateTime.Now.Month</div>
+                                    </div>
                                     <div class="text-center">
-                                        <h6 class="text-fade mb-20">Your credit limit</h6>
-                                        <h1>$8,000</h1>
-                                        <h6 class="text-fade mb-10">You're good!</h6>
-                                        <button type="button" class="btn btn-rounded btn-warning mt-10 btn-sm">Credit History</button>
+                                        <h2 class="text-fade mb-20">@item.BankName</h2>
+                                        <h3>@item.Currency @item.Balance</h3>
+                                        @*<h6 class="text-fade mb-10">of your $2,600 goal.</h6>*@
+                                        <button type="button" class="btn btn-rounded btn-success mt-10 btn-sm disabled">
+                                            <span style="position: relative;
+                                                    padding-right: 10px;
+                                                    overflow: hidden;"><i class="glyphicon glyphicon-arrow-up"></i></span>@item.Currency @item.TotalIncome
+                                                </button>
+
+                                                <button type="button" class="btn btn-rounded btn-danger mt-10 btn-sm disabled">
+                                                    <span style="position: relative;
+                                                    padding-right: 10px;
+                                                    overflow: hidden;"><i class="glyphicon glyphicon-arrow-down"></i></span>@item.Currency @item.TotalExpense
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+
                        }
                     </div>
                 </div>
@@ -173,8 +187,6 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-        
-
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-light">
             <!-- Create the tabs -->
