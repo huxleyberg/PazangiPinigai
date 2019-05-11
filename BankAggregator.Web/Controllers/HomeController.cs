@@ -17,6 +17,7 @@ using BankAggregator.Core.Services.Banks;
 using BankAggregator.Core.Services.MedBank;
 using BankAggregator.Core.Services.Banks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BankAggregator.Core.Services.SEB;
 
 namespace BankAggregator.Web.Controllers
 {
@@ -29,16 +30,18 @@ namespace BankAggregator.Web.Controllers
         private readonly IAccountSummaryService _accountSummaryService;
         private readonly IBankService _bankService;
         private IMedBankServices _medBankServices;
+        private readonly ISEBAccountAuthService _sEBAccountAuthService;
 
 
         public HomeController(AggregatorContext context, UserManager<appUser> userManager, ITransactionService transactionService,
-            IAccountSummaryService accountSummaryService, IBankService bankService)
+            IAccountSummaryService accountSummaryService, IBankService bankService, ISEBAccountAuthService sEBAccountAuthService)
         {
             _context = context;
             _userManager = userManager;
             _transactionService = transactionService;
             _accountSummaryService = accountSummaryService;
             _bankService = bankService;
+            _sEBAccountAuthService = sEBAccountAuthService;
 
         }
         public HomeController(AggregatorContext context, UserManager<appUser> userManager, IMedBankServices medBankServices)
@@ -118,24 +121,35 @@ namespace BankAggregator.Web.Controllers
         {
             var acctModel = new accountModel();
             //string accountId = "ACC _ID_" + model.acctNumber; 
-            var bankInfo = _medBankServices.GetAccountInfoById(model.acctNumber).Result;
 
-            acctModel.BankName = model.bankName;
-            acctModel.BankAccountNumber = bankInfo.AccountNumber;
-            acctModel.BankAccountName = bankInfo.AccountName;
-            acctModel.Currency = bankInfo.Currency;
-            acctModel.AccountType = bankInfo.AccountType;
-            acctModel.Balance = bankInfo.AccountBalance;
-            acctModel.TotalExpense = bankInfo.TotalExpenses;
-            acctModel.TotalIncome = bankInfo.TotalIncome;
-            acctModel.SandboxIdentification = bankInfo.SandboxIdentification;
-            acctModel.CreatedAt = DateTime.Now;
-            acctModel.User = await _userManager.GetUserAsync(HttpContext.User);
-            acctModel.TransactionLimit = model.transactionLimit;
+            if (model.bankName.ToLower() == "seb")
+            {
+                var redirecturl = _sEBAccountAuthService.AuthRedirectUrl();
+                return Redirect(redirecturl);
+            }
+            else
+            {
+
+                var bankInfo = _medBankServices.GetAccountInfoById(model.acctNumber).Result;
+                acctModel.BankName = model.bankName;
+                acctModel.BankAccountNumber = bankInfo.AccountNumber;
+                acctModel.BankAccountName = bankInfo.AccountName;
+                acctModel.Currency = bankInfo.Currency;
+                acctModel.AccountType = bankInfo.AccountType;
+                acctModel.Balance = bankInfo.AccountBalance;
+                acctModel.TotalExpense = bankInfo.TotalExpenses;
+                acctModel.TotalIncome = bankInfo.TotalIncome;
+                acctModel.SandboxIdentification = bankInfo.SandboxIdentification;
+                acctModel.CreatedAt = DateTime.Now;
+                acctModel.User = await _userManager.GetUserAsync(HttpContext.User);
+                acctModel.TransactionLimit = model.transactionLimit;
+
+                _context.AccountModels.Add(acctModel);
+                await _context.SaveChangesAsync();
+            }
 
 
-            _context.AccountModels.Add(acctModel);
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Dashboard));
         }
 
