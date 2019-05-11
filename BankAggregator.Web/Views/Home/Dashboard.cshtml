@@ -94,18 +94,18 @@
                                             <div class="flexbox align-items-center justify-content-between d-lg-flex d-block">
                                                 <div>
                                                     <h3 class="text-info">Account summary</h3>
-                                                    <h2 class="font-weight-700 text-dark">$125,498,894</h2>
-                                                    <h6 class=" text-fade">3 Accounts</h6>
+                                                    <h2 class="font-weight-700 text-dark">EUR <span>@Model.TotalAccountSum</span></h2>
+                                                    <h6 class=" text-fade">@Model.TotalAccountCount <span>accounts</span></h6>
                                                 </div>
                                                 <div>
                                                     <h4 class="text-info">Total income</h4>
-                                                    <h4 class=" text-dark">$125,498,894</h4>
-                                                    <h6 class=" text-fade">4 Transactions</h6>
+                                                    <h4 class=" text-dark">EUR <span>@Model.TotalIncomeSum</span></h4>
+                                                    <h6 class=" text-fade">@Model.TotalIncomeTransactionsCount <span>transactions</span></h6>
                                                 </div>
                                                 <div>
                                                     <h3 class="text-info">Total expenses</h3>
-                                                    <h4 class="text-red">$125,498,894</h4>
-                                                    <h6 class=" text-fade">13 Transactions</h6>
+                                                    <h4 class="text-red">EUR <span>@Model.TotalExpenses</span></h4>
+                                                    <h6 class=" text-fade">@Model.TotalExpenseTransactionsCount <span>transactions</span></h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,99 +125,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--	<div class="col-md-6 col-12">
-                                        <div class="box box-primary pull-up">
-                                            <div class="box-body">
-                                                <div class="d-flex align-items-center font-size-24">
-                                                    <div class="icon">
-                                                    <i class="mdi mdi-star-circle text-white mr-10"></i>
-                                                    </div>
-                                                    <p class="font-weight-medium mb-0 text-white">Sales</p>
-                                                </div>
-                                                <div class="d-flex align-items-center flex-wrap">
-                                                    <h3 class="font-weight-normal text-white">96587</h3>
-                                                    <div class="badge badge-outline badge-pill ml-10">
-                                                    <div class="d-flex align-items-baseline">
-                                                        <span class="mr-2">High</span>
-                                                        <span class="mb-0">485</span>
-                                                        <span class="mdi mdi-arrow-up"></span>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <p class="font-weight-medium d-block text-white-70 mb-0">Total for this month</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="box box-info pull-up">
-                                            <div class="box-body">
-                                                <div class="d-flex align-items-center font-size-24">
-                                                    <div class="icon">
-                                                    <i class="mdi mdi-truck text-white mr-10"></i>
-                                                    </div>
-                                                    <p class="font-weight-medium mb-0 text-white">Investment</p>
-                                                </div>
-                                                <div class="d-flex align-items-center flex-wrap">
-                                                    <h3 class="font-weight-normal text-white">85469</h3>
-                                                    <div class="badge badge-outline badge-pill ml-10">
-                                                    <div class="d-flex align-items-baseline">
-                                                        <span class="mr-2">High</span>
-                                                        <span class="mb-0">563</span>
-                                                        <span class="mdi mdi-arrow-up"></span>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <p class="font-weight-medium d-block text-white-70 mb-0">Total for this month</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="box box-warning pull-up">
-                                            <div class="box-body">
-                                                <div class="d-flex align-items-center font-size-24">
-                                                    <div class="icon">
-                                                    <i class="mdi mdi-basket text-white mr-10"></i>
-                                                    </div>
-                                                    <p class="font-weight-medium mb-0 text-white">Gold</p>
-                                                </div>
-                                                <div class="d-flex align-items-center flex-wrap">
-                                                    <h3 class="font-weight-normal text-white">74589</h3>
-                                                    <div class="badge badge-outline badge-pill ml-10">
-                                                    <div class="d-flex align-items-baseline">
-                                                        <span class="mr-2">Low</span>
-                                                        <span class="mb-0">123</span>
-                                                        <span class="mdi mdi-arrow-down"></span>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <p class="font-weight-medium d-block text-white-70 mb-0">Total for this month</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="box box-danger pull-up">
-                                            <div class="box-body">
-                                                <div class="d-flex align-items-center font-size-24">
-                                                    <div class="icon">
-                                                    <i class="mdi mdi-package-down text-white mr-10"></i>
-                                                    </div>
-                                                    <p class="font-weight-medium mb-0 text-white">Bond</p>
-                                                </div>
-                                                <div class="d-flex align-items-center flex-wrap">
-                                                    <h3 class="font-weight-normal text-white">2548</h3>
-                                                    <div class="badge badge-outline badge-pill ml-10">
-                                                    <div class="d-flex align-items-baseline">
-                                                        <span class="mr-2">Low</span>
-                                                        <span class="mb-0">235</span>
-                                                        <span class="mdi mdi-arrow-down"></span>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <p class="font-weight-medium d-block text-white-70 mb-0">Total for this month</p>
-                                            </div>
-                                        </div>
-                                    </div>--->
-
                             </div>
                         </div>
                         <div class="col-lg-12 col-12">
@@ -418,19 +325,7 @@
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="pull-right d-none d-sm-inline-block">
-                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">FAQ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Purchase Now</a>
-                    </li>
-                </ul>
-            </div>
-            &copy; 2019 <a href="https://www.multipurposethemes.com/">Multi-Purpose Themes</a>. All Rights Reserved.
-        </footer>
+        
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-light">
