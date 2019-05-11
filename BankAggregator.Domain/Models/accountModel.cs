@@ -10,6 +10,7 @@ namespace BankAggregator.Domain.Models
         public string appUserId { get; set; }
         public string BankName { get; set; }
         public string BankAccountNumber { get; set; }
+        public string BankAccountName { get; set; }
         public decimal? Balance { get; set; }
         public string Currency { get; set; }
         public DateTime? CreatedAt { get; set; }
@@ -19,5 +20,7 @@ namespace BankAggregator.Domain.Models
         public decimal TotalIncome { get; set; }
 
         public decimal? TransactionLimit { get; set; }
+        public string AccountType { get; set; }
+        public string SandboxIdentification { get; set; }
     }
 }

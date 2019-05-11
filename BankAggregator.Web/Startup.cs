@@ -17,7 +17,6 @@ using BankAggregator.Core.Services.Banks;
 using BankAggregator.Core.Services.Transactions;
 using BankAggregator.Core.Services.AccountSummary;
 using BankAggregator.Core.Services.SEB;
-using BankAggregator.Domain.EF;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankAggregator.Web
@@ -50,8 +49,8 @@ namespace BankAggregator.Web
             services.AddScoped<IAccountSummaryService, AccountSummaryService>();
             services.AddScoped<ISEBAccountAuthService, SEBAccountAuthService>();
 
-            services.AddDbContext<FinAggregatorDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AggregatorContextConnection")));
+            //services.AddDbContext<FinAggregatorDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("AggregatorContextConnection")));
 
         }
 

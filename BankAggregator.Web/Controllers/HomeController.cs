@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 using BankAggregator.Domain.Models;
 using BankAggregator.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using BankAggregator.Core.Services.MedBank;
+using BankAggregator.Core.Services.Banks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BankAggregator.Web.Controllers
 {
@@ -19,11 +22,13 @@ namespace BankAggregator.Web.Controllers
     {
         private AggregatorContext _context;
         private UserManager<appUser> _userManager;
+        private IMedBankServices _medBankServices;
 
-        public HomeController(AggregatorContext context, UserManager<appUser> userManager)
+        public HomeController(AggregatorContext context, UserManager<appUser> userManager, IMedBankServices medBankServices)
         {
             _context = context;
             _userManager = userManager;
+            _medBankServices = medBankServices;
         }
         public IActionResult Index()
         {
@@ -81,6 +86,8 @@ namespace BankAggregator.Web.Controllers
 
         public IActionResult addBank()
         {
+            var Banks = new BankService();
+            ViewData["BankList"] = new SelectList(Banks.GetBanks(), "Id", "Name");
             return View();
         }
 
@@ -88,12 +95,22 @@ namespace BankAggregator.Web.Controllers
         public async Task<IActionResult> addBank(accountViewModel model)
         {
             var acctModel = new accountModel();
+            //string accountId = "ACC _ID_" + model.acctNumber; 
+            var bankInfo = _medBankServices.GetAccountInfoById(model.acctNumber).Result;
+
             acctModel.BankName = model.bankName;
-            acctModel.BankAccountNumber = model.acctNumber;
+            acctModel.BankAccountNumber = bankInfo.AccountNumber;
+            acctModel.BankAccountName = bankInfo.AccountName;
+            acctModel.Currency = bankInfo.Currency;
+            acctModel.AccountType = bankInfo.AccountType;
+            acctModel.Balance = bankInfo.AccountBalance;
+            acctModel.TotalExpense = bankInfo.TotalExpenses;
+            acctModel.TotalIncome = bankInfo.TotalIncome;
+            acctModel.SandboxIdentification = bankInfo.SandboxIdentification;
             acctModel.CreatedAt = DateTime.Now;
             acctModel.User = await _userManager.GetUserAsync(HttpContext.User);
             acctModel.TransactionLimit = model.transactionLimit;
-            acctModel.Currency = "EUR";
+            
 
             _context.AccountModels.Add(acctModel);
             await _context.SaveChangesAsync();
