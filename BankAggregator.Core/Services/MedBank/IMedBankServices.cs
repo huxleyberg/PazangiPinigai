@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Threading.Tasks;
+using BankAggregator.Core.DTOs;
+
 namespace BankAggregator.Core.Services.MedBank
 {
     public interface IMedBankServices
     {
-        string GetConsent();
+        Task<string> GetConsent();
 
         void GetAllAccounts();
 
-        string GetAccountById(string accountId);
+        Task GetBalanceAccountById(string accountId);
+
+        Task<BankInformation> GetAccountInfoById(string accountId);
     }
 }

@@ -20,7 +20,10 @@ namespace BankAggregator.Web.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            string consent = _medBankServices.GetConsent();
+            //var consent = _medBankServices.GetConsent();
+
+            var bankInfo = _medBankServices.GetAccountInfoById("ACC_ID_123456789").Result;
+
             return View();
         }
     }
