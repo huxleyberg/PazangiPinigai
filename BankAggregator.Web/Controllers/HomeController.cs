@@ -103,6 +103,7 @@ namespace BankAggregator.Web.Controllers
             model.TotalExpenseTransactionsCount = _accountSummaryService.TotalExpenseTransCount(userId);
             model.TotalIncomeSum = _accountSummaryService.GetTotalIncomeSumForCustomerFrmTrans(userId);
             model.TotalIncomeTransactionsCount = _accountSummaryService.TotalIncomeTransCount(userId);
+            model.TransLimit = _accountSummaryService.TransLimit(userId);
 
 
             return View(model);
