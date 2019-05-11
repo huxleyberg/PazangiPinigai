@@ -78,7 +78,7 @@ namespace BankAggregator.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect("/home/contact");
+                    return LocalRedirect("/Home/Dashboard");
                 }
                 if (result.RequiresTwoFactor)
                 {
