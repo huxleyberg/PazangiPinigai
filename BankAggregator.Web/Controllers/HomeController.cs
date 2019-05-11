@@ -54,9 +54,6 @@ namespace BankAggregator.Web.Controllers
             request.AddHeader("Accept", "text/html");
             IRestResponse response = client.Execute(request);
 
-
-
-
             //return Redirect(response.ResponseUri.AbsoluteUri);
 
             return View();
