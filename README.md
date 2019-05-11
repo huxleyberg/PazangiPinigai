@@ -1,1 +1,3 @@
-Finacial Aggregator 
+Finance account aggregator
+
+
