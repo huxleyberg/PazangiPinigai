@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BankAggregator.Core.Services.MedBank;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankAggregator.Web
 {
@@ -34,8 +35,21 @@ namespace BankAggregator.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            var connection = @"Server=.\sqlexpress;Database=BankAggregator;Trusted_Connection=True;ConnectRetryCount=0";
+
+            services.AddDbContext<AggregatorContext>
+                (options => options.UseSqlServer(connection, b => b.MigrationsAssembly("BankAggregator.Web")));
+
+            services.AddIdentity<appUser, IdentityRole>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = false;
+            })
+               .AddEntityFrameworkStores<AggregatorContext>()
+               .AddDefaultTokenProviders();
+
 
             services.AddScoped<IMedBankServices, MedBankServices>();
         }
