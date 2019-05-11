@@ -10,6 +10,8 @@
     <Folder Include="Services\MedBank\" />
     <Folder Include="DTOs\" />
     <Folder Include="Services\Banks\" />
+    <Folder Include="Services\AccountSummary\" />
+    <Folder Include="Services\Transactions\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Class1.cs" />
@@ -21,5 +23,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\..\usr\local\share\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\11.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BankAggregator.Domain\BankAggregator.Domain.csproj" />
   </ItemGroup>
 </Project>
