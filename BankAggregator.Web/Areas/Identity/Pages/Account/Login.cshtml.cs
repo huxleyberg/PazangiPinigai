@@ -78,6 +78,7 @@ namespace BankAggregator.Web.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    //get the object via the email
                     return LocalRedirect("/Home/Dashboard");
                 }
                 if (result.RequiresTwoFactor)

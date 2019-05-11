@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 using BankAggregator.Domain.Models;
 using BankAggregator.Web.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using BankAggregator.Core.Services.Transactions;
+using BankAggregator.Core.Services.AccountSummary;
+using BankAggregator.Core.Services.Banks;
 
 namespace BankAggregator.Web.Controllers
 {
@@ -19,11 +22,20 @@ namespace BankAggregator.Web.Controllers
     {
         private AggregatorContext _context;
         private UserManager<appUser> _userManager;
+        private readonly ITransactionService _transactionService;
+        private readonly IAccountSummaryService _accountSummaryService;
+        private readonly IBankService _bankService;
 
-        public HomeController(AggregatorContext context, UserManager<appUser> userManager)
+
+
+        public HomeController(AggregatorContext context, UserManager<appUser> userManager, ITransactionService transactionService,
+            IAccountSummaryService accountSummaryService, IBankService bankService)
         {
             _context = context;
             _userManager = userManager;
+            _transactionService = transactionService;
+            _accountSummaryService = accountSummaryService;
+            _bankService = bankService;
         }
         public IActionResult Index()
         {
@@ -43,10 +55,14 @@ namespace BankAggregator.Web.Controllers
             return View();
         }
 
-        public IActionResult Dashboard()
+        public async Task<IActionResult> Dashboard()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            string userId = user.Id;
             return View();
         }
+
+
 
         public IActionResult oauth(string code)
         {
