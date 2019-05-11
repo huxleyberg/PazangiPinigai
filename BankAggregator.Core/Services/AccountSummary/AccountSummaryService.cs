@@ -29,7 +29,7 @@ namespace BankAggregator.Core.Services.AccountSummary
         {
             decimal total = 0M;
             var accts = GetAllCustomerAccounts(userId);
-            if (accts != null)
+            if (accts != null && accts.Count != 0)
             {
                 total = accts.Sum(x => (decimal)x.Balance);
             }
@@ -43,7 +43,7 @@ namespace BankAggregator.Core.Services.AccountSummary
             List<Transaction> trans = _transactionService.GetAccountTransactions(accountNumber);
             trans = trans.Where(x => x.TransactionType.ToLower() == "d").ToList();
 
-            if (trans != null)
+            if (trans != null && trans.Count != 0)
             {
                 sum = trans.Sum(x => x.Amount);
             }
@@ -78,7 +78,7 @@ namespace BankAggregator.Core.Services.AccountSummary
             List<Transaction> trans = _transactionService.GetAccountTransactions(accountNumber);
             trans = trans.Where(x => x.TransactionType.ToLower() == "c").ToList();
 
-            if (trans != null)
+            if (trans != null && trans.Count != 0)
             {
                 sum = trans.Sum(x => x.Amount);
             }
@@ -97,7 +97,7 @@ namespace BankAggregator.Core.Services.AccountSummary
             {
                 var trans = _transactionService.GetAccountTransactions(acct.BankAccountNumber);
                 var total = 0M;
-                if (trans != null)
+                if (trans != null && trans.Count != 0)
                 {
                     trans = trans.Where(x => x.TransactionType.ToLower() == "c").ToList();
                     total = trans.Sum(x => x.Amount);
@@ -124,7 +124,7 @@ namespace BankAggregator.Core.Services.AccountSummary
             {
                 var trans = _transactionService.GetAccountTransactions(acct.BankAccountNumber);
                 var total = 0;
-                if (trans != null)
+                if (trans != null && trans.Count != 0)
                 {
                     trans = trans.Where(x => x.TransactionType.ToLower() == "d").ToList();
                     total = trans.Count;
@@ -146,7 +146,7 @@ namespace BankAggregator.Core.Services.AccountSummary
             {
                 var trans = _transactionService.GetAccountTransactions(acct.BankAccountNumber);
                 var total = 0;
-                if (trans != null)
+                if (trans != null && trans.Count != 0)
                 {
                     trans = trans.Where(x => x.TransactionType.ToLower() == "c").ToList();
                     total = trans.Count;
@@ -161,7 +161,7 @@ namespace BankAggregator.Core.Services.AccountSummary
         {
             decimal total = 0M;
             var accts = GetAllCustomerAccounts(userId);
-            if (accts != null)
+            if (accts != null && accts.Count != 0)
             {
                 total = accts.Sum(x => (decimal)x.TransactionLimit);
             }
