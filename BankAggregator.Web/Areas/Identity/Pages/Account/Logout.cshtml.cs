@@ -23,8 +23,19 @@ namespace BankAggregator.Web.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public void OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            string returnUrl = "/home/index";
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return Page();
+            }
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)

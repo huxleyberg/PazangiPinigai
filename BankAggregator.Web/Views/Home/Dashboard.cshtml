@@ -46,11 +46,10 @@
 
         <nav class="navbar navbar-dark bg-primary">
             <a class="navbar-brand" href="#">Pazzangi Dashboard</a>
-            <div style="
-    margin-right: 50px;">
-                <span class="mr-2 d-none d-lg-inline text-gray-600">Valerie Luna</span>
+            <div style=" margin-right: 50px;">
+                <a href="/identity/account/logout"><span class="mr-2 d-none d-lg-inline text-gray-600">Log Out</span></a>
+                <span class="mr-2 d-none d-lg-inline text-gray-600">@User.Identity.Name</span>
                 <img class="img-profile rounded-circle glyphicon glyphicon-user" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-
             </div>
         </nav>
 
@@ -148,7 +147,7 @@
                                 <div class="box pull-up">
                                     <div class="box-body py-40">
                                         <div classs="row">
-                                            <div class="col-md-6 " pull-right">@DateTime.Now.Month</div>
+                                           @* <div class="col-md-6 " pull-right">@DateTime.Now.ToString("MMMM")</div>*@
                                         </div>
                                         <div class="text-center">
                                             <h2 class="text-fade mb-20">@item.BankName</h2>

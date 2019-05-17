@@ -26,7 +26,7 @@ using System.Text.Encodings.Web;
 
 namespace BankAggregator.Web.Controllers
 {   
-    [Authorize]
+   
     public class HomeController : Controller
     {
         private AggregatorContext _context;
@@ -72,7 +72,7 @@ namespace BankAggregator.Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> login(LoginModel Input, string returnUrl = null)
+        public async Task<IActionResult> login(ProfileModel Input, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
 
@@ -80,7 +80,7 @@ namespace BankAggregator.Web.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(Input.LoginModel.Email, Input.LoginModel.Password, Input.LoginModel.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -89,7 +89,7 @@ namespace BankAggregator.Web.Controllers
                 }
                 if (result.RequiresTwoFactor)
                 {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.LoginModel.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
@@ -107,13 +107,13 @@ namespace BankAggregator.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> register(ViewModels.RegisterModel Input, string returnUrl = null)
+        public async Task<IActionResult> register(ViewModels.ProfileModel Input, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new appUser { UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber, FullName = Input.FullName, CreatedAt = DateTime.Now };
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                var user = new appUser { UserName = Input.RegisterModel.Email, Email = Input.RegisterModel.Email, PhoneNumber = Input.RegisterModel.PhoneNumber, FullName = Input.RegisterModel.FullName, CreatedAt = DateTime.Now };
+                var result = await _userManager.CreateAsync(user, Input.RegisterModel.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
@@ -129,7 +129,7 @@ namespace BankAggregator.Web.Controllers
                         //$"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    return RedirectToAction(nameof(Dashboard));
                 }
                 foreach (var error in result.Errors)
                 {
@@ -138,7 +138,7 @@ namespace BankAggregator.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return RedirectToAction(nameof(Dashboard));
+            return RedirectToAction(nameof(Index));
         }
 
         public IActionResult About()
@@ -148,6 +148,7 @@ namespace BankAggregator.Web.Controllers
             return View();
         }
 
+        [Authorize]
         public async Task<IActionResult> Dashboard()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -217,7 +218,7 @@ namespace BankAggregator.Web.Controllers
         public IActionResult addBank()
         {
             var Banks = new BankService();
-            ViewData["BankList"] = new SelectList(Banks.GetBanks(), "Id", "Name");
+            ViewData["BankList"] = new SelectList(Banks.GetBanks(), "Name", "Name");
             return View();
         }
 
